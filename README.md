@@ -43,12 +43,12 @@ A theme changes colours, type and line treatment, not the layout. Tone names (`b
 
 <table>
 <tr>
-<td width="50%" align="center"><img src="docs/images/theme-soft.png" width="100%"><br><b><code>soft</code></b> (default)</td>
-<td width="50%" align="center"><img src="docs/images/theme-nature.png" width="100%"><br><b><code>nature</code></b></td>
+<td width="50%" align="center"><img src="docs/images/theme-pastel.png" width="100%"><br><b><code>pastel</code></b> (default)</td>
+<td width="50%" align="center"><img src="docs/images/theme-navy.png" width="100%"><br><b><code>navy</code></b></td>
 </tr>
 <tr>
-<td width="50%" align="center"><img src="docs/images/theme-formal.png" width="100%"><br><b><code>formal</code></b></td>
-<td width="50%" align="center"><img src="docs/images/theme-ceramic.png" width="100%"><br><b><code>ceramic</code></b></td>
+<td width="50%" align="center"><img src="docs/images/theme-slate.png" width="100%"><br><b><code>slate</code></b></td>
+<td width="50%" align="center"><img src="docs/images/theme-terracotta.png" width="100%"><br><b><code>terracotta</code></b></td>
 </tr>
 <tr>
 <td width="50%" align="center"><img src="docs/images/theme-okabe-ito.png" width="100%"><br><b><code>okabe-ito</code></b></td>
@@ -57,10 +57,10 @@ A theme changes colours, type and line treatment, not the layout. Tone names (`b
 </table>
 
 ```tsx
-theme: 'nature',   // or ['nature', t => { ... }] to adjust; or `npm run build -- --theme nature`
+theme: 'navy',   // or ['navy', t => { ... }] to adjust; or `npm run build -- --theme navy`
 ```
 
-Presets and their uses are listed in [`toolkit.md`](skills/pt-perfect/references/toolkit.md). The preset intents were informed by the Nature figure guidelines as summarised in [Yuan1z0825/nature-skills](https://github.com/Yuan1z0825/nature-skills) and by the style presets of [mikubaka88/CCFA-Skills](https://github.com/mikubaka88/CCFA-Skills); the `nature` hues follow the NPG palette popularised by [ggsci](https://github.com/nanxstats/ggsci); `okabe-ito` is the Okabe–Ito colour-blind-safe palette.
+Presets and their uses are listed in [`toolkit.md`](skills/pt-perfect/references/toolkit.md). Palette references: [ggsci](https://github.com/nanxstats/ggsci) (NPG) for `navy` and Okabe–Ito for `okabe-ito`; some preset ideas come from [Yuan1z0825/nature-skills](https://github.com/Yuan1z0825/nature-skills) and [mikubaka88/CCFA-Skills](https://github.com/mikubaka88/CCFA-Skills).
 
 ## Same skill, different models
 

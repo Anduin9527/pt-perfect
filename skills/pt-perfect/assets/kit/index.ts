@@ -13,7 +13,7 @@ export type FigureSpec = {
   assets?: Record<string, string>;
   /** Optional sha256 per asset name; the build stops on a mismatch. */
   hashes?: Record<string, string>;
-  /** A preset name ('nature', 'formal', ...), a function that adjusts the theme, or a list of both applied in order. */
+  /** A preset name ('navy', 'slate', ...), a function that adjusts the theme, or a list of both applied in order. */
   theme?: ThemeInput;
   /** Draw into the scene and return the figure height in pt. */
   draw: (s: Scene) => number;

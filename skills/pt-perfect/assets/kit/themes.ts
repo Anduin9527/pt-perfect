@@ -29,10 +29,10 @@ const palette = (t: Theme, ink: string, c: { grey: string; blue: string; green: 
 };
 
 export const themes: Record<string, (t: Theme) => void> = {
-  /** Default: low-saturation semantic ramps, Times, soft corners. */
-  soft: () => {},
-  /** Journal style: sans-serif at 5-7 pt, one dark ink, thin lines, restrained NPG-like hues. */
-  nature: t => {
+  /** Default: pastel fills with low-saturation hues, Times, rounded corners. */
+  pastel: () => {},
+  /** Navy-led NPG-like hues, sans-serif at 5-7 pt, one dark ink, thin lines. */
+  navy: t => {
     sans(t);
     palette(t, '#1A1A1A', { grey: '#7E8791', blue: '#3C5488', green: '#00A087', orange: '#E18727', purple: '#7E6148', red: '#DC4B37' }, { fill: 0.86, text: 0.25 });
     t.tones.purple = ramp('#8491B4', { fill: 0.84, text: 0.4 });
@@ -41,8 +41,8 @@ export const themes: Record<string, (t: Theme) => void> = {
     t.size = { title: 7, label: 6.5, note: 6 }; t.minPt = 5;
     t.stroke = { node: 0.5, wire: 0.5, hair: 0.3 }; t.radius = 1.2; t.wireRadius = 1.4; t.arrow = { length: 3.2, width: 2.5 };
   },
-  /** Formal mechanism: dark neutral context, one blue accent, near-square corners. */
-  formal: t => {
+  /** Slate neutrals with one blue accent, near-square corners. */
+  slate: t => {
     // Secondary tones are desaturated (slate green, taupe, slate violet) so blue stays the only accent
     // while every tone remains distinguishable from grey and from each other.
     palette(t, '#1F2933', { grey: '#7B8794', blue: '#1F5FA8', green: '#5C7A6E', orange: '#8A7560', purple: '#6A6585', red: '#B03A2E' }, { fill: 0.82 });
@@ -50,8 +50,8 @@ export const themes: Record<string, (t: Theme) => void> = {
     t.tones.blue = ramp('#1F5FA8', { fill: 0.84 });
     t.radius = 0.6; t.wireRadius = 1; t.stroke = { node: 0.6, wire: 0.6, hair: 0.35 };
   },
-  /** Ceramic: teal and terracotta accents on pale warm fills. */
-  ceramic: t => {
+  /** Teal and terracotta accents on pale warm fills. */
+  terracotta: t => {
     t.paper = '#FFFFFF';
     palette(t, '#33302C', { grey: '#9A948B', blue: '#3F7C85', green: '#6B8F71', orange: '#C2693D', purple: '#8A6F92', red: '#B4514A' }, { fill: 0.86 });
     // Warm only the context tone; warming the accents turns the teal fill muddy.

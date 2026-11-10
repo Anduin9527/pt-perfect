@@ -21,7 +21,7 @@ export default defineFigure({
   title: '...', desc: '...',   // 写入 SVG 的 title/desc
   assets: { input: 'assets/input.png' },
   hashes: { input: '<sha256>' },         // 可选；不一致时构建中止
-  theme: ['nature', t => { t.size.label = 7; }], // 可选；预设名、调整函数或二者的列表，见“主题”
+  theme: ['navy', t => { t.size.label = 7; }], // 可选；预设名、调整函数或二者的列表，见“主题”
   draw(s) { /* 绘制 */ return heightPt; } // 返回图高
 });
 ```
@@ -114,18 +114,18 @@ npm run typecheck
 
 | 预设 | 用途 |
 | --- | --- |
-| `soft` | 默认。低饱和语义色、Times、柔和圆角 |
-| `nature` | 期刊风格：无衬线字体（Arial），5–7 pt 字号，单一深色墨色，细线，克制的 NPG 色相 |
-| `formal` | 正式的机理图：深灰中性色为底，蓝色为唯一强调色，其余色调降低饱和度，近直角 |
-| `ceramic` | 青绿与赭红强调色，配暖色浅底 |
+| `pastel` | 默认。低饱和色相配浅色填充，Times，柔和圆角 |
+| `navy` | 以藏青为主的 NPG 色相，无衬线字体（Arial），5–7 pt 字号，细线；适合字号与线宽要求较小的版面 |
+| `slate` | 深灰中性色为底，蓝色为唯一强调色，其余色调降低饱和度，近直角；适合机理图 |
+| `terracotta` | 青绿与赭红强调色，配暖色浅底 |
 | `okabe-ito` | Okabe–Ito 配色，在常见色觉缺陷下仍可区分 |
 | `mono` | 灰度，用于检查黑白印刷下各色调能否区分 |
 
 选择方式有三种：
 
 ```ts
-theme: 'nature',                                  // 使用预设
-theme: ['nature', t => { t.size.label = 6.5; }],  // 预设后再做调整，按顺序执行
+theme: 'navy',                                  // 使用预设
+theme: ['navy', t => { t.size.label = 6.5; }],  // 预设后再做调整，按顺序执行
 ```
 
 命令行 `--theme <预设>` 替换图中写定的预设，保留其中的调整函数，用于不改源码比较各主题，例如 `npm run build -- --theme mono`。未知的预设名会报错并列出可用名称。
@@ -134,7 +134,7 @@ theme: ['nature', t => { t.size.label = 6.5; }],  // 预设后再做调整，按
 
 ```ts
 import { defineFigure, ramp } from './kit';
-theme: ['nature', t => { t.tones.blue = ramp('#2E6DB4'); t.tones.orange = ramp('#C8702A', { fill: 0.85 }); }],
+theme: ['navy', t => { t.tones.blue = ramp('#2E6DB4'); t.tones.orange = ramp('#C8702A', { fill: 0.85 }); }],
 ```
 
 图中的颜色应取自色调（`s.tone('blue').line`）或主题字段（`s.theme.ink`、`muted`、`hairline`、`paper`），不写固定的十六进制色值，否则切换主题时这些颜色不会随之改变。需要中间色时用 `mix()` 由主题颜色混合得到。

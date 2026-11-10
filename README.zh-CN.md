@@ -43,12 +43,12 @@
 
 <table>
 <tr>
-<td width="50%" align="center"><img src="docs/images/theme-soft.png" width="100%"><br><b><code>soft</code></b>（默认）</td>
-<td width="50%" align="center"><img src="docs/images/theme-nature.png" width="100%"><br><b><code>nature</code></b></td>
+<td width="50%" align="center"><img src="docs/images/theme-pastel.png" width="100%"><br><b><code>pastel</code></b>（默认）</td>
+<td width="50%" align="center"><img src="docs/images/theme-navy.png" width="100%"><br><b><code>navy</code></b></td>
 </tr>
 <tr>
-<td width="50%" align="center"><img src="docs/images/theme-formal.png" width="100%"><br><b><code>formal</code></b></td>
-<td width="50%" align="center"><img src="docs/images/theme-ceramic.png" width="100%"><br><b><code>ceramic</code></b></td>
+<td width="50%" align="center"><img src="docs/images/theme-slate.png" width="100%"><br><b><code>slate</code></b></td>
+<td width="50%" align="center"><img src="docs/images/theme-terracotta.png" width="100%"><br><b><code>terracotta</code></b></td>
 </tr>
 <tr>
 <td width="50%" align="center"><img src="docs/images/theme-okabe-ito.png" width="100%"><br><b><code>okabe-ito</code></b></td>
@@ -57,10 +57,10 @@
 </table>
 
 ```tsx
-theme: 'nature',   // 或 ['nature', t => { ... }] 再做调整；也可用 `npm run build -- --theme nature`
+theme: 'navy',   // 或 ['navy', t => { ... }] 再做调整；也可用 `npm run build -- --theme navy`
 ```
 
-各预设的用途见 [`toolkit.md`](skills/pt-perfect/references/toolkit.md)。预设的定位参考了 [Yuan1z0825/nature-skills](https://github.com/Yuan1z0825/nature-skills) 对 Nature 插图规范的整理以及 [mikubaka88/CCFA-Skills](https://github.com/mikubaka88/CCFA-Skills) 的风格预设；`nature` 的色相沿用 [ggsci](https://github.com/nanxstats/ggsci) 推广的 NPG 配色；`okabe-ito` 即 Okabe–Ito 色盲友好配色。
+各预设的用途见 [`toolkit.md`](skills/pt-perfect/references/toolkit.md)。配色参考：`navy` 的色相取自 [ggsci](https://github.com/nanxstats/ggsci) 的 NPG 配色，`okabe-ito` 即 Okabe–Ito 色盲友好配色；部分预设的思路来自 [Yuan1z0825/nature-skills](https://github.com/Yuan1z0825/nature-skills) 与 [mikubaka88/CCFA-Skills](https://github.com/mikubaka88/CCFA-Skills)。
 
 ## 同一技能，不同模型
 
