@@ -77,13 +77,7 @@ The task: recreate Fig. 2 of *3DSMT: A Hybrid Spiking Mamba-Transformer for Poin
 </tr>
 </table>
 
-All three recreations are 174 mm wide and pass the audit with 0 errors and 0 warnings. The audit checks mechanical defects only, not topology; the differences below were found by looking at the figures.
-
-- **Claude Fable 5.2** (via Claude Code, 174 × 106.9 mm): made while the module-figure primitives of this kit were being developed, so it is not a cold run. Hatched token columns are drawn solid.
-- **gpt-6.1-sol** (via Codex CLI, 174 × 112.9 mm): a cold run of about 13 minutes. Chrome could not start inside the Codex sandbox, so the final PDF/PNG export was run afterwards on the unchanged source.
-- **DeepSeek Flash 4.1** (model id `deepseek-flash`, via omp, 174 × 129.1 mm): a cold run of about 17 minutes costing about $0.21. It has visible deviations: the subtraction in the SLOA panel is drawn as an addition, the point-cloud crops keep fragments of the original's arrows, and two zoom callouts cross other panels.
-
-Both cold runs started in a fresh directory that held only this skill and the reference image, with an instruction to read nothing else; their logs show no reads outside that directory. In all three, the point-cloud images are crops of the published figure, so their resolution is limited. The original figure belongs to its authors and is shown here only for comparison.
+<sub>The original figure belongs to its authors and is shown here only for comparison.</sub>
 
 ## Install
 
