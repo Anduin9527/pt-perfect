@@ -5,7 +5,7 @@
 <p align="center">An agent skill for paper figures that are correct at the printed point.<br>
 Pixel-perfect is for screens. Papers are <b>pt-perfect</b>.</p>
 
-<p align="center"><a href="README.zh-CN.md">简体中文</a> · <a href="#install">Install</a> · <a href="#what-it-draws">Gallery</a> · <a href="#same-skill-different-models">Comparison</a> · <a href="LICENSE">MIT</a></p>
+<p align="center"><a href="README.zh-CN.md">简体中文</a> · <a href="#install">Install</a> · <a href="#what-it-draws">Gallery</a> · <a href="#themes">Themes</a> · <a href="#same-skill-different-models">Comparison</a> · <a href="LICENSE">MIT</a></p>
 
 ---
 
@@ -36,6 +36,31 @@ Hand-written absolute coordinates are why generated figures keep breaking: a sub
 <p align="center"><img src="docs/images/example-module.png" width="100%"></p>
 
 Both are 174 mm wide, pass the audit with 0 errors and 0 warnings, and are built from the example sources above.
+
+## Themes
+
+A theme changes colours, type and line treatment, not the layout. Tone names (`blue`, `orange`, ...) are semantic slots that every preset fills, so the same source switches theme without edits. Below is the ViT module figure from the gallery in each preset.
+
+<table>
+<tr>
+<td width="50%" align="center"><img src="docs/images/theme-soft.png" width="100%"><br><b><code>soft</code></b> (default)</td>
+<td width="50%" align="center"><img src="docs/images/theme-nature.png" width="100%"><br><b><code>nature</code></b></td>
+</tr>
+<tr>
+<td width="50%" align="center"><img src="docs/images/theme-formal.png" width="100%"><br><b><code>formal</code></b></td>
+<td width="50%" align="center"><img src="docs/images/theme-ceramic.png" width="100%"><br><b><code>ceramic</code></b></td>
+</tr>
+<tr>
+<td width="50%" align="center"><img src="docs/images/theme-okabe-ito.png" width="100%"><br><b><code>okabe-ito</code></b></td>
+<td width="50%" align="center"><img src="docs/images/theme-mono.png" width="100%"><br><b><code>mono</code></b></td>
+</tr>
+</table>
+
+```tsx
+theme: 'nature',   // or ['nature', t => { ... }] to adjust; or `npm run build -- --theme nature`
+```
+
+Presets and their uses are listed in [`toolkit.md`](skills/pt-perfect/references/toolkit.md). The preset intents were informed by the Nature figure guidelines as summarised in [Yuan1z0825/nature-skills](https://github.com/Yuan1z0825/nature-skills) and by the style presets of [mikubaka88/CCFA-Skills](https://github.com/mikubaka88/CCFA-Skills); the `nature` hues follow the NPG palette popularised by [ggsci](https://github.com/nanxstats/ggsci); `okabe-ito` is the Okabe–Ito colour-blind-safe palette.
 
 ## Same skill, different models
 

@@ -3,9 +3,9 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "tsx kit/cli.tsx build",
+    "build": "node --import tsx kit/cli.tsx build",
     "watch": "tsx watch kit/cli.tsx build",
-    "export": "tsx kit/cli.tsx export",
+    "export": "node --import tsx kit/cli.tsx export",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {

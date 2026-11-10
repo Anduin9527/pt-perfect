@@ -1,6 +1,6 @@
 // tsx kit/cli.tsx build    -> exports/<name>.svg, audit.json, preview.html (no browser)
 // tsx kit/cli.tsx export   -> build, then PDF + PNG through Chrome and export-report.json
-// Options: --figure <file> (default figure.tsx), --out <dir> (default exports), --dpi <n> (default 600), --allow-errors
+// Options: --figure <file> (default figure.tsx), --out <dir> (default exports), --dpi <n> (default 600), --theme <preset> (replaces the figure's preset), --allow-errors
 import fs from 'node:fs';
 import path from 'node:path';
 import crypto from 'node:crypto';
@@ -11,6 +11,7 @@ import { Scene } from './scene';
 import { audit, type Finding } from './audit';
 import { initFonts, fontReport } from './measure';
 import { defaultTheme, MM } from './theme';
+import { applyTheme } from './themes';
 import type { FigureSpec } from './index';
 
 const args = process.argv.slice(2);
@@ -25,7 +26,7 @@ const mime: Record<string, string> = { '.png': 'image/png', '.jpg': 'image/jpeg'
 async function build() {
   const spec: FigureSpec = (await import(pathToFileURL(figureFile).href)).default;
   const theme = structuredClone(defaultTheme);
-  spec.theme?.(theme);
+  applyTheme(theme, spec.theme, flag('theme'));
   initFonts(theme);
   const assets: Record<string, string> = {}, hashes: Record<string, string> = {};
   for (const [name, file] of Object.entries(spec.assets ?? {})) {
@@ -144,4 +145,4 @@ async function exportAll() {
 
 if (command === 'build') { const { report } = await build(); if (report.errors.length) process.exitCode = 2; }
 else if (command === 'export') await exportAll();
-else { console.error('Usage: tsx kit/cli.tsx build|export [--figure file] [--dpi n] [--allow-errors]'); process.exit(1); }
+else { console.error('Usage: tsx kit/cli.tsx build|export [--figure file] [--out dir] [--theme preset] [--dpi n] [--allow-errors]'); process.exit(1); }

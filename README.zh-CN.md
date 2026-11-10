@@ -5,7 +5,7 @@
 <p align="center">面向编码智能体的论文插图技能：按印刷磅值保证正确。<br>
 屏幕讲究像素级精确，论文讲究<b>磅值级精确</b>。</p>
 
-<p align="center"><a href="README.md">English</a> · <a href="#安装">安装</a> · <a href="#能画什么">图例</a> · <a href="#同一技能不同模型">对比</a> · <a href="LICENSE">MIT</a></p>
+<p align="center"><a href="README.md">English</a> · <a href="#安装">安装</a> · <a href="#能画什么">图例</a> · <a href="#主题">主题</a> · <a href="#同一技能不同模型">对比</a> · <a href="LICENSE">MIT</a></p>
 
 ---
 
@@ -36,6 +36,31 @@
 <p align="center"><img src="docs/images/example-module.png" width="100%"></p>
 
 两张图宽度均为 174 mm，几何审计结果为 0 错误、0 警告，由上表中的范例源码构建。
+
+## 主题
+
+主题只改变颜色、字体与线条处理，不改变版面。色调名（`blue`、`orange` 等）是语义槽位，每个预设都会填满，因此同一份源码无需修改即可切换主题。下图为上文的 ViT 模块图在各预设下的效果。
+
+<table>
+<tr>
+<td width="50%" align="center"><img src="docs/images/theme-soft.png" width="100%"><br><b><code>soft</code></b>（默认）</td>
+<td width="50%" align="center"><img src="docs/images/theme-nature.png" width="100%"><br><b><code>nature</code></b></td>
+</tr>
+<tr>
+<td width="50%" align="center"><img src="docs/images/theme-formal.png" width="100%"><br><b><code>formal</code></b></td>
+<td width="50%" align="center"><img src="docs/images/theme-ceramic.png" width="100%"><br><b><code>ceramic</code></b></td>
+</tr>
+<tr>
+<td width="50%" align="center"><img src="docs/images/theme-okabe-ito.png" width="100%"><br><b><code>okabe-ito</code></b></td>
+<td width="50%" align="center"><img src="docs/images/theme-mono.png" width="100%"><br><b><code>mono</code></b></td>
+</tr>
+</table>
+
+```tsx
+theme: 'nature',   // 或 ['nature', t => { ... }] 再做调整；也可用 `npm run build -- --theme nature`
+```
+
+各预设的用途见 [`toolkit.md`](skills/pt-perfect/references/toolkit.md)。预设的定位参考了 [Yuan1z0825/nature-skills](https://github.com/Yuan1z0825/nature-skills) 对 Nature 插图规范的整理以及 [mikubaka88/CCFA-Skills](https://github.com/mikubaka88/CCFA-Skills) 的风格预设；`nature` 的色相沿用 [ggsci](https://github.com/nanxstats/ggsci) 推广的 NPG 配色；`okabe-ito` 即 Okabe–Ito 色盲友好配色。
 
 ## 同一技能，不同模型
 

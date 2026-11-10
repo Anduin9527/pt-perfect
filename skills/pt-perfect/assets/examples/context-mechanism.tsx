@@ -23,7 +23,7 @@ function draw(s: Scene): number {
   const rand = seeded(5), weights = Array.from({ length: N * N }, () => rand() ** 3); // attention weights: schematic
 
   const scene = (id: string, tone: string, title: string, noteText: string, x: number, input: (i: number, j: number) => number, extra: (sp: Space, line: string) => void) => {
-    const T = s.tone(tone), pb = s.panel(id, { x, y: P, w: PW, h: PH }, { title, tone, fill: '#FFFFFF' });
+    const T = s.tone(tone), pb = s.panel(id, { x, y: P, w: PW, h: PH }, { title, tone, fill: s.theme.paper });
     const probe = new Space({ box: { x: 0, y: 0, w: 0, h: 0 }, ...CAM });
     const ext = [0, GAPZ].flatMap(z => [corner(0, 0, z), corner(N, 0, z), corner(0, N, z), corner(N, N, z)]).map(p => probe.at(p));
     const ys = ext.map(p => p[1]), xs = ext.map(p => p[0]);
@@ -31,11 +31,12 @@ function draw(s: Scene): number {
     const sp = new Space({ box: { x: inner.x + inner.w / 2 - (Math.min(...xs) + Math.max(...xs)) / 2, y: inner.y + inner.h / 2 - (Math.min(...ys) + Math.max(...ys)) / 2, w: 0, h: 0 }, ...CAM });
     const grid = (z: number, fill: (i: number, j: number) => string, opacity?: (i: number, j: number) => number) => {
       for (let i = 0; i < N; i++) for (let j = 0; j < N; j++)
-        sp.polygon([corner(i, j, z), corner(i + 1, j, z), corner(i + 1, j + 1, z), corner(i, j + 1, z)], { fill: fill(i, j), opacity: opacity?.(i, j), stroke: '#9AA6B1', width: 0.3 });
+        sp.polygon([corner(i, j, z), corner(i + 1, j, z), corner(i + 1, j + 1, z), corner(i, j + 1, z)], { fill: fill(i, j), opacity: opacity?.(i, j), stroke: mix(s.theme.hairline, s.theme.muted, 0.45), width: 0.3 });
     };
-    grid(0, (i, j) => mix('#F5F7F9', T.line, input(i, j)));
+    const blank = mix(s.theme.paper, s.theme.hairline, 0.2);
+    grid(0, (i, j) => mix(blank, T.line, input(i, j)));
     // The output map is translucent so the lines that arrive from below stay visible.
-    grid(GAPZ, (i, j) => i === TARGET[0] && j === TARGET[1] ? T.line : '#F5F7F9', (i, j) => i === TARGET[0] && j === TARGET[1] ? 1 : 0.55);
+    grid(GAPZ, (i, j) => i === TARGET[0] && j === TARGET[1] ? T.line : blank, (i, j) => i === TARGET[0] && j === TARGET[1] ? 1 : 0.55);
     extra(sp, T.line);
     s.raw(`${id}.space`, sp.render(), inner, { kind: 'region' });
     const lo = sp.at(corner(0, 0, 0)), hi = sp.at(corner(0, 0, GAPZ));

@@ -1,10 +1,11 @@
 # 工具包说明
 
-`assets/kit/` 共六个文件，复制到图的工程目录后可按需修改：
+`assets/kit/` 中的文件复制到图的工程目录后可按需修改：
 
 | 文件 | 作用 |
 | --- | --- |
 | `theme.ts` | 色调、字号、线宽、留白、测量用字体文件，单位均为 pt |
+| `themes.ts` | 命名主题预设、`ramp()` 与 `applyTheme()` |
 | `measure.ts` | 用 fontkit 测量文字、用 MathJax 测量公式（含高度与深度） |
 | `scene.tsx` | 绘图原语；每个原语同时输出 SVG 并登记几何信息 |
 | `audit.ts` | 基于登记的几何信息做审计，在 Node 中运行 |
@@ -20,7 +21,7 @@ export default defineFigure({
   title: '...', desc: '...',   // 写入 SVG 的 title/desc
   assets: { input: 'assets/input.png' },
   hashes: { input: '<sha256>' },         // 可选；不一致时构建中止
-  theme: t => { t.size.label = 7; },     // 可选；调整默认主题
+  theme: ['nature', t => { t.size.label = 7; }], // 可选；预设名、调整函数或二者的列表，见“主题”
   draw(s) { /* 绘制 */ return heightPt; } // 返回图高
 });
 ```
@@ -94,7 +95,7 @@ npm run export    # 另生成 PDF、PNG、pdf-check.png、export-report.json
 npm run typecheck
 ```
 
-`cli.tsx` 接受 `--figure <文件>`、`--out <目录>`、`--dpi <n>`、`--allow-errors`。
+`cli.tsx` 接受 `--figure <文件>`、`--out <目录>`、`--theme <预设>`、`--dpi <n>`、`--allow-errors`。
 
 `preview.html` 可离线打开，提供适应窗口、印刷尺寸、300%、审计框四种视图；审计框视图显示每个对象登记的包围盒，有问题的标红。屏幕上的“印刷尺寸”依赖显示器设置，物理尺寸以 PDF 为准。
 
@@ -106,6 +107,37 @@ npm run typecheck
 - Chrome 路径可用环境变量 `CHROME_PATH` 指定。系统装有 poppler 时会额外报告字体嵌入与图片对象数，并输出 PDF 的栅格检查图。
 
 `export-report.json` 中 `text.worstWidthDriftPt` 是浏览器实际渲染宽度与 fontkit 测量值的最大差距。超过 0.5 pt 说明测量用字体与渲染字体不一致：检查 `theme.fontFiles` 是否指向 `theme.fontFamily` 中排在首位且系统已安装的字体。
+
+## 主题
+
+主题只改变颜色、字体与线条处理，不改变构图。七个色调名（`neutral`、`grey`、`blue`、`green`、`orange`、`purple`、`red`）是语义槽位，每个预设都会填满，因此同一份源码可以直接切换主题。
+
+| 预设 | 用途 |
+| --- | --- |
+| `soft` | 默认。低饱和语义色、Times、柔和圆角 |
+| `nature` | 期刊风格：无衬线字体（Arial），5–7 pt 字号，单一深色墨色，细线，克制的 NPG 色相 |
+| `formal` | 正式的机理图：深灰中性色为底，蓝色为唯一强调色，其余色调降低饱和度，近直角 |
+| `ceramic` | 青绿与赭红强调色，配暖色浅底 |
+| `okabe-ito` | Okabe–Ito 配色，在常见色觉缺陷下仍可区分 |
+| `mono` | 灰度，用于检查黑白印刷下各色调能否区分 |
+
+选择方式有三种：
+
+```ts
+theme: 'nature',                                  // 使用预设
+theme: ['nature', t => { t.size.label = 6.5; }],  // 预设后再做调整，按顺序执行
+```
+
+命令行 `--theme <预设>` 替换图中写定的预设，保留其中的调整函数，用于不改源码比较各主题，例如 `npm run build -- --theme mono`。未知的预设名会报错并列出可用名称。
+
+自定义配色时，用 `ramp(base, { fill, text })` 由一个基色生成一个色调：`stroke` 与 `line` 取基色，`fill` 为基色与白色按 `fill`（默认 0.88）混合，`text` 为基色向黑色加深 `text`（默认 0.32）。
+
+```ts
+import { defineFigure, ramp } from './kit';
+theme: ['nature', t => { t.tones.blue = ramp('#2E6DB4'); t.tones.orange = ramp('#C8702A', { fill: 0.85 }); }],
+```
+
+图中的颜色应取自色调（`s.tone('blue').line`）或主题字段（`s.theme.ink`、`muted`、`hairline`、`paper`），不写固定的十六进制色值，否则切换主题时这些颜色不会随之改变。需要中间色时用 `mix()` 由主题颜色混合得到。
 
 ## 换字体、中文与多语言
 
