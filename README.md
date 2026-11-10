@@ -5,7 +5,7 @@
 <p align="center">An agent skill for paper figures that are correct at the printed point.<br>
 Pixel-perfect is for screens. Papers are <b>pt-perfect</b>.</p>
 
-<p align="center"><a href="README.zh-CN.md">简体中文</a> · <a href="#install">Install</a> · <a href="#what-it-draws">Gallery</a> · <a href="#same-skill-different-agents">Comparison</a> · <a href="LICENSE">MIT</a></p>
+<p align="center"><a href="README.zh-CN.md">简体中文</a> · <a href="#install">Install</a> · <a href="#what-it-draws">Gallery</a> · <a href="#same-skill-different-models">Comparison</a> · <a href="LICENSE">MIT</a></p>
 
 ---
 
@@ -37,27 +37,28 @@ Hand-written absolute coordinates are why generated figures keep breaking: a sub
 
 Both are 174 mm wide, pass the audit with 0 errors and 0 warnings, and are built from the example sources above.
 
-## Same skill, different agents
+## Same skill, different models
 
 The task: recreate Fig. 2 of *3DSMT: A Hybrid Spiking Mamba-Transformer for Point Cloud Analysis* at 174 mm from the figure image alone. Topology, module names and signal names follow the original; colours, fonts and icons follow the skill's defaults.
 
 <table>
 <tr>
 <td width="50%" align="center"><img src="docs/images/compare-3dsmt-original.jpg" width="100%"><br><b>Original</b> (paper figure)</td>
-<td width="50%" align="center"><img src="docs/images/compare-3dsmt-claude.png" width="100%"><br><b>Claude Code</b> · Claude Fable 5.2</td>
+<td width="50%" align="center"><img src="docs/images/compare-3dsmt-claude.png" width="100%"><br><b>Claude Fable 5.2</b></td>
 </tr>
 <tr>
-<td width="50%" align="center"><img src="docs/images/compare-3dsmt-codex.png" width="100%"><br><b>Codex CLI</b> · gpt-6.1-sol</td>
-<td width="50%"></td>
+<td width="50%" align="center"><img src="docs/images/compare-3dsmt-codex.png" width="100%"><br><b>gpt-6.1-sol</b></td>
+<td width="50%" align="center"><img src="docs/images/compare-3dsmt-omp.png" width="100%"><br><b>DeepSeek Flash 4.1</b></td>
 </tr>
 </table>
 
-Both recreations are 174 mm wide and pass the audit with 0 errors and 0 warnings.
+All three recreations are 174 mm wide and pass the audit with 0 errors and 0 warnings. The audit checks mechanical defects only, not topology; the differences below were found by looking at the figures.
 
-- **Claude Code** (174 × 106.9 mm): made while the module-figure primitives of this kit were being developed, so it is not a cold run. Hatched token columns are drawn solid.
-- **Codex CLI** (174 × 112.9 mm): a cold run of about 13 minutes in a fresh directory that held only this skill and the reference image, with an instruction to read nothing else; its log shows no reads outside that directory. Chrome could not start inside the Codex sandbox, so the final PDF/PNG export was run afterwards on the unchanged source.
+- **Claude Fable 5.2** (via Claude Code, 174 × 106.9 mm): made while the module-figure primitives of this kit were being developed, so it is not a cold run. Hatched token columns are drawn solid.
+- **gpt-6.1-sol** (via Codex CLI, 174 × 112.9 mm): a cold run of about 13 minutes. Chrome could not start inside the Codex sandbox, so the final PDF/PNG export was run afterwards on the unchanged source.
+- **DeepSeek Flash 4.1** (model id `deepseek-flash`, via omp, 174 × 129.1 mm): a cold run of about 17 minutes costing about $0.21. It has visible deviations: the subtraction in the SLOA panel is drawn as an addition, the point-cloud crops keep fragments of the original's arrows, and two zoom callouts cross other panels.
 
-In both, the point-cloud images are crops of the published figure, so their resolution is limited. The original figure belongs to its authors and is shown here only for comparison.
+Both cold runs started in a fresh directory that held only this skill and the reference image, with an instruction to read nothing else; their logs show no reads outside that directory. In all three, the point-cloud images are crops of the published figure, so their resolution is limited. The original figure belongs to its authors and is shown here only for comparison.
 
 ## Install
 

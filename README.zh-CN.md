@@ -5,7 +5,7 @@
 <p align="center">面向编码智能体的论文插图技能：按印刷磅值保证正确。<br>
 屏幕讲究像素级精确，论文讲究<b>磅值级精确</b>。</p>
 
-<p align="center"><a href="README.md">English</a> · <a href="#安装">安装</a> · <a href="#能画什么">图例</a> · <a href="#同一技能不同智能体">对比</a> · <a href="LICENSE">MIT</a></p>
+<p align="center"><a href="README.md">English</a> · <a href="#安装">安装</a> · <a href="#能画什么">图例</a> · <a href="#同一技能不同模型">对比</a> · <a href="LICENSE">MIT</a></p>
 
 ---
 
@@ -37,27 +37,28 @@
 
 两张图宽度均为 174 mm，几何审计结果为 0 错误、0 警告，由上表中的范例源码构建。
 
-## 同一技能，不同智能体
+## 同一技能，不同模型
 
 任务：仅依据论文插图的图像，按 174 mm 宽度复刻 *3DSMT: A Hybrid Spiking Mamba-Transformer for Point Cloud Analysis* 的 Fig. 2。拓扑、模块名与信号名依照原图；配色、字体与图标采用技能的默认样式。
 
 <table>
 <tr>
 <td width="50%" align="center"><img src="docs/images/compare-3dsmt-original.jpg" width="100%"><br><b>原图</b>（论文插图）</td>
-<td width="50%" align="center"><img src="docs/images/compare-3dsmt-claude.png" width="100%"><br><b>Claude Code</b> · Claude Fable 5.2</td>
+<td width="50%" align="center"><img src="docs/images/compare-3dsmt-claude.png" width="100%"><br><b>Claude Fable 5.2</b></td>
 </tr>
 <tr>
-<td width="50%" align="center"><img src="docs/images/compare-3dsmt-codex.png" width="100%"><br><b>Codex CLI</b> · gpt-6.1-sol</td>
-<td width="50%"></td>
+<td width="50%" align="center"><img src="docs/images/compare-3dsmt-codex.png" width="100%"><br><b>gpt-6.1-sol</b></td>
+<td width="50%" align="center"><img src="docs/images/compare-3dsmt-omp.png" width="100%"><br><b>DeepSeek Flash 4.1</b></td>
 </tr>
 </table>
 
-两张复刻图宽度均为 174 mm，几何审计结果均为 0 错误、0 警告。
+三张复刻图宽度均为 174 mm，几何审计结果均为 0 错误、0 警告。审计只检查机械缺陷，不保证拓扑正确，下列差别均由看图得出。
 
-- **Claude Code**（174 × 106.9 mm）：在开发本工具包的模块图原语期间绘制，不属于冷启动运行。token 列的斜纹填充改为纯色。
-- **Codex CLI**（174 × 112.9 mm）：冷启动运行，耗时约 13 分钟；工作目录中只有本技能和参考图，并要求不读取其他内容，运行日志中未见对该目录之外的读取。Chrome 无法在 Codex 的沙箱内启动，最终的 PDF 与 PNG 导出是事后在未改动的源码上完成的。
+- **Claude Fable 5.2**（经 Claude Code，174 × 106.9 mm）：在开发本工具包的模块图原语期间绘制，不属于冷启动运行。token 列的斜纹填充改为纯色。
+- **gpt-6.1-sol**（经 Codex CLI，174 × 112.9 mm）：冷启动运行，耗时约 13 分钟。Chrome 无法在 Codex 的沙箱内启动，最终的 PDF 与 PNG 导出是事后在未改动的源码上完成的。
+- **DeepSeek Flash 4.1**（模型标识 `deepseek-flash`，经 omp，174 × 129.1 mm）：冷启动运行，耗时约 17 分钟，费用约 0.21 美元。存在看图可见的偏差：SLOA 面板中原图的减法被画成加法；点云裁图残留原图的箭头碎片；两条放大引线穿过其他面板。
 
-两张图中的点云图均由已发表的插图裁出，分辨率有限。原图版权归其作者所有，此处仅用于对比。
+两次冷启动运行的工作目录中只有本技能和参考图，并要求不读取其他内容；运行记录中未见对该目录之外的读取。三张图中的点云图均由已发表的插图裁出，分辨率有限。原图版权归其作者所有，此处仅用于对比。
 
 ## 安装
 
