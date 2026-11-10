@@ -45,8 +45,14 @@
 | --- | --- |
 | **原图**（论文插图） | <img src="docs/images/compare-3dsmt-original.jpg" width="100%"> |
 | **Claude Code** · Claude Fable 5.2 | <img src="docs/images/compare-3dsmt-claude.png" width="100%"> |
+| **Codex CLI** · gpt-6.1-sol | <img src="docs/images/compare-3dsmt-codex.png" width="100%"> |
 
-复刻图尺寸为 174 × 106.9 mm，几何审计结果为 0 错误、0 警告。与原图有两处有意的差别：token 列的斜纹填充改为纯色；点云图由已发表的插图裁出，分辨率有限。该图是在开发本工具包的模块图原语期间绘制的，因此不属于冷启动运行。原图版权归其作者所有，此处仅用于对比。
+两张复刻图宽度均为 174 mm，几何审计结果均为 0 错误、0 警告。
+
+- **Claude Code**（174 × 106.9 mm）：在开发本工具包的模块图原语期间绘制，不属于冷启动运行。token 列的斜纹填充改为纯色。
+- **Codex CLI**（174 × 112.9 mm）：冷启动运行，耗时约 13 分钟；工作目录中只有本技能和参考图，并要求不读取其他内容，运行日志中未见对该目录之外的读取。Chrome 无法在 Codex 的沙箱内启动，最终的 PDF 与 PNG 导出是事后在未改动的源码上完成的。
+
+两张图中的点云图均由已发表的插图裁出，分辨率有限。原图版权归其作者所有，此处仅用于对比。
 
 ## 安装
 

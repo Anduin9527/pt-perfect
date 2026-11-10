@@ -45,8 +45,14 @@ The task: recreate Fig. 2 of *3DSMT: A Hybrid Spiking Mamba-Transformer for Poin
 | --- | --- |
 | **Original** (paper figure) | <img src="docs/images/compare-3dsmt-original.jpg" width="100%"> |
 | **Claude Code** · Claude Fable 5.2 | <img src="docs/images/compare-3dsmt-claude.png" width="100%"> |
+| **Codex CLI** · gpt-6.1-sol | <img src="docs/images/compare-3dsmt-codex.png" width="100%"> |
 
-The recreation is 174 × 106.9 mm and passes the audit with 0 errors and 0 warnings. Two deliberate differences from the original: hatched token columns are drawn solid, and the point-cloud images are crops of the published figure, so their resolution is limited. It was made while the module-figure primitives of this kit were being developed, so it is not a cold run. The original figure belongs to its authors and is shown here only for comparison.
+Both recreations are 174 mm wide and pass the audit with 0 errors and 0 warnings.
+
+- **Claude Code** (174 × 106.9 mm): made while the module-figure primitives of this kit were being developed, so it is not a cold run. Hatched token columns are drawn solid.
+- **Codex CLI** (174 × 112.9 mm): a cold run of about 13 minutes in a fresh directory that held only this skill and the reference image, with an instruction to read nothing else; its log shows no reads outside that directory. Chrome could not start inside the Codex sandbox, so the final PDF/PNG export was run afterwards on the unchanged source.
+
+In both, the point-cloud images are crops of the published figure, so their resolution is limited. The original figure belongs to its authors and is shown here only for comparison.
 
 ## Install
 
