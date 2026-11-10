@@ -41,11 +41,16 @@
 
 任务：仅依据论文插图的图像，按 174 mm 宽度复刻 *3DSMT: A Hybrid Spiking Mamba-Transformer for Point Cloud Analysis* 的 Fig. 2。拓扑、模块名与信号名依照原图；配色、字体与图标采用技能的默认样式。
 
-| | |
-| --- | --- |
-| **原图**（论文插图） | <img src="docs/images/compare-3dsmt-original.jpg" width="100%"> |
-| **Claude Code** · Claude Fable 5.2 | <img src="docs/images/compare-3dsmt-claude.png" width="100%"> |
-| **Codex CLI** · gpt-6.1-sol | <img src="docs/images/compare-3dsmt-codex.png" width="100%"> |
+<table>
+<tr>
+<td width="50%" align="center"><img src="docs/images/compare-3dsmt-original.jpg" width="100%"><br><b>原图</b>（论文插图）</td>
+<td width="50%" align="center"><img src="docs/images/compare-3dsmt-claude.png" width="100%"><br><b>Claude Code</b> · Claude Fable 5.2</td>
+</tr>
+<tr>
+<td width="50%" align="center"><img src="docs/images/compare-3dsmt-codex.png" width="100%"><br><b>Codex CLI</b> · gpt-6.1-sol</td>
+<td width="50%"></td>
+</tr>
+</table>
 
 两张复刻图宽度均为 174 mm，几何审计结果均为 0 错误、0 警告。
 

@@ -41,11 +41,16 @@ Both are 174 mm wide, pass the audit with 0 errors and 0 warnings, and are built
 
 The task: recreate Fig. 2 of *3DSMT: A Hybrid Spiking Mamba-Transformer for Point Cloud Analysis* at 174 mm from the figure image alone. Topology, module names and signal names follow the original; colours, fonts and icons follow the skill's defaults.
 
-| | |
-| --- | --- |
-| **Original** (paper figure) | <img src="docs/images/compare-3dsmt-original.jpg" width="100%"> |
-| **Claude Code** · Claude Fable 5.2 | <img src="docs/images/compare-3dsmt-claude.png" width="100%"> |
-| **Codex CLI** · gpt-6.1-sol | <img src="docs/images/compare-3dsmt-codex.png" width="100%"> |
+<table>
+<tr>
+<td width="50%" align="center"><img src="docs/images/compare-3dsmt-original.jpg" width="100%"><br><b>Original</b> (paper figure)</td>
+<td width="50%" align="center"><img src="docs/images/compare-3dsmt-claude.png" width="100%"><br><b>Claude Code</b> · Claude Fable 5.2</td>
+</tr>
+<tr>
+<td width="50%" align="center"><img src="docs/images/compare-3dsmt-codex.png" width="100%"><br><b>Codex CLI</b> · gpt-6.1-sol</td>
+<td width="50%"></td>
+</tr>
+</table>
 
 Both recreations are 174 mm wide and pass the audit with 0 errors and 0 warnings.
 
