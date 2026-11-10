@@ -88,13 +88,16 @@ export class Scene {
     if (!t) throw new Error(`Unknown tone "${name}"`);
     return t;
   }
-  /** Fill and text colour of a node in the theme's look; an explicit fill is kept as given. */
-  private paint(name: string | undefined, fill?: string): { fill: string; text: string } {
+  /**
+   * Fill and text colour of a node in the theme's look; an explicit fill is kept as given.
+   * A dashed node keeps the pale fill under 'solid', where its dashes would vanish into the fill.
+   */
+  private paint(name: string | undefined, fill?: string, dash?: boolean): { fill: string; text: string } {
     const T = this.theme, tone = this.tone(name), look = T.look.node;
     if (fill) return { fill, text: T.ink };
     if (look === 'outline') return { fill: T.paper, text: T.ink };
-    if (!name || name === 'neutral' || look === 'tint') return { fill: tone.fill, text: T.ink };
-    if (look === 'solid') return { fill: tone.stroke, text: T.paper };
+    if (!name || name === 'neutral' || look === 'tint' || (look === 'solid' && dash)) return { fill: tone.fill, text: T.ink };
+    if (look === 'solid') return { fill: tone.stroke, text: readable(tone.stroke, T.paper, T.ink) };
     const id = `g${tone.fill.slice(1)}`;
     this.defs.set(id, <linearGradient key={id} id={id} x1="0" y1="0" x2="0" y2="1"><stop offset="0" stopColor={mix(tone.fill, T.paper, 0.75)} /><stop offset="1" stopColor={mix(tone.fill, tone.stroke, 0.22)} /></linearGradient>);
     return { fill: `url(#${id})`, text: T.ink };
@@ -191,7 +194,9 @@ export class Scene {
     const x = spec.x ?? (spec.cx ?? 0) - w / 2, y = spec.y ?? (spec.cy ?? 0) - h / 2;
     const box = { x, y, w, h };
     this.register({ id, kind: 'node', box, group: spec.group });
-    const rx = spec.radius ?? T.radius, sh = T.look.shadow, paint = this.paint(spec.tone, spec.fill);
+    const rx = spec.radius ?? T.radius, paint = this.paint(spec.tone, spec.fill, spec.dash);
+    // No shadow under a dashed (auxiliary) node or an unfilled one, where it would show through.
+    const sh = spec.dash || spec.fill === 'none' ? 0 : T.look.shadow;
     if (sh > 0) this.push('back', <rect x={r(x + sh)} y={r(y + sh)} width={r(w)} height={r(h)} rx={rx} fill={tone.stroke} />);
     this.push('body', <rect data-id={id} x={r(x)} y={r(y)} width={r(w)} height={r(h)} rx={rx} fill={paint.fill} stroke={tone.stroke} strokeWidth={T.stroke.node} strokeDasharray={spec.dash ? '2.4 1.8' : undefined} />);
     if (lines.length) {
@@ -286,7 +291,7 @@ export class Scene {
         this.push('back', <path d={`M${r(box.x)} ${r(box.y + h)}V${r(box.y + R)}a${R} ${R} 0 0 1 ${R} ${-R}H${r(box.x + w)}V${r(box.y + h - c)}a${c} ${c} 0 0 1 ${-c} ${c}Z`} fill={tone.stroke} />);
       }
       if (at === 'below') this.label(`${id}.title`, l, { x: cx(box), y: bottom(box) + 4, ax: 'c', ay: 'top', color: o.color ?? T.ink });
-      else this.label(`${id}.title`, l, { x: at === 'tl' ? box.x + pad : at === 'tr' ? right(box) - pad : cx(box), y: box.y + pad * (tab ? 0.8 : 1), ax: at === 'tl' ? 'l' : at === 'tr' ? 'r' : 'c', ay: 'top', color: o.color ?? (tab ? T.paper : tone.text) });
+      else this.label(`${id}.title`, l, { x: at === 'tl' ? box.x + pad : at === 'tr' ? right(box) - pad : cx(box), y: box.y + pad * (tab ? 0.8 : 1), ax: at === 'tl' ? 'l' : at === 'tr' ? 'r' : 'c', ay: 'top', color: o.color ?? (tab ? readable(tone.stroke, T.paper, T.ink) : tone.text) });
     }
     return box;
   }
@@ -402,8 +407,13 @@ export class Scene {
       d += `L${r(p1[0])} ${r(p1[1])}Q${r(x)} ${r(y)} ${r(p2[0])} ${r(p2[1])}`;
     }
     const L = T.arrow.length, W = T.arrow.width / 2;
+    // An arrow that ends on the right or bottom edge of a node with an offset shadow runs over
+    // that shadow; a paper halo under the head keeps its tip readable.
+    const target = this.items.find(i => i.id === o.to), sh = this.theme.look.shadow;
+    const halo = arrow && sh > 0 && target?.kind === 'node' && (Math.abs(end[0] - right(target.box)) < 0.05 || Math.abs(end[1] - bottom(target.box)) < 0.05);
     const head = arrow ? `M${r(end[0])} ${r(end[1])}L${r(end[0] - ux * L - uy * W)} ${r(end[1] - uy * L + ux * W)}L${r(end[0] - ux * L * 0.72)} ${r(end[1] - uy * L * 0.72)}L${r(end[0] - ux * L + uy * W)} ${r(end[1] - uy * L - ux * W)}Z` : null;
     this.push('wire', <g data-wire={id}>
+      {halo && head && <path d={head} fill={T.paper} stroke={T.paper} strokeWidth={0.9} strokeLinejoin="round" />}
       <path d={d} fill="none" stroke={color} strokeWidth={o.width ?? T.stroke.wire} strokeLinejoin="round" strokeDasharray={o.dash ? '2.4 1.8' : undefined} />
       {head && <path d={head} fill={color} />}
     </g>);
@@ -424,5 +434,12 @@ export class Scene {
 export function mix(a: string, b: string, t: number) {
   const h = (c: string, i: number) => parseInt(c.slice(1 + 2 * i, 3 + 2 * i), 16);
   return '#' + [0, 1, 2].map(i => Math.round(h(a, i) + (h(b, i) - h(a, i)) * t).toString(16).padStart(2, '0')).join('');
+}
+/** Whichever of the two text colours contrasts more with the fill (WCAG relative luminance). */
+export function readable(fill: string, light: string, dark: string) {
+  const lum = (c: string) => [0, 1, 2].map(i => parseInt(c.slice(1 + 2 * i, 3 + 2 * i), 16) / 255)
+    .map(v => v <= 0.03928 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4).reduce((s, v, i) => s + v * [0.2126, 0.7152, 0.0722][i], 0);
+  const ratio = (a: string, b: string) => { const [x, y] = [lum(a), lum(b)].sort((p, q) => q - p); return (x + 0.05) / (y + 0.05); };
+  return ratio(fill, light) >= ratio(fill, dark) ? light : dark;
 }
 export function r(v: number, digits = 2) { return +v.toFixed(digits); }

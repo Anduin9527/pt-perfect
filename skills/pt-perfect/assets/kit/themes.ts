@@ -31,7 +31,7 @@ const palette = (t: Theme, ink: string, c: { grey: string; blue: string; green: 
 export const themes: Record<string, (t: Theme) => void> = {
   /** Default: pastel fills with low-saturation hues, Times, rounded corners. */
   pastel: () => {},
-  /** Navy-led NPG-like hues as solid fills with white text, sans-serif at 5-7 pt, thin lines, unfilled panels. */
+  /** Navy-led NPG-like hues as solid fills (text in paper or ink, whichever contrasts more), sans-serif at 5-7 pt, thin lines, unfilled panels. */
   navy: t => {
     sans(t);
     palette(t, '#1A1A1A', { grey: '#7E8791', blue: '#3C5488', green: '#00A087', orange: '#E18727', purple: '#7E6148', red: '#DC4B37' }, { fill: 0.86, text: 0.25 });

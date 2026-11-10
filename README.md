@@ -39,20 +39,20 @@ Both are 174 mm wide, pass the audit with 0 errors and 0 warnings, and are built
 
 ## Themes
 
-A theme changes colours, type and rendering (fills, shadows, panel titles), not the layout. Tone names (`blue`, `orange`, ...) are semantic slots that every preset fills, so the same source switches theme without edits. Below is the ViT module figure from the gallery in each preset.
+A theme changes colours, type and rendering (fills, shadows, panel titles), not the layout. Tone names (`blue`, `orange`, ...) are semantic slots that every preset fills, so the same source switches theme without edits. Below are the two gallery figures in each preset.
 
 <table>
 <tr>
-<td width="50%" align="center"><img src="docs/images/theme-pastel.png" width="100%"><br><b><code>pastel</code></b> (default)</td>
-<td width="50%" align="center"><img src="docs/images/theme-navy.png" width="100%"><br><b><code>navy</code></b></td>
+<td width="50%" align="center"><img src="docs/images/theme-pastel.png" width="100%"><br><img src="docs/images/theme-pastel-mechanism.png" width="100%"><br><b><code>pastel</code></b> (default)</td>
+<td width="50%" align="center"><img src="docs/images/theme-navy.png" width="100%"><br><img src="docs/images/theme-navy-mechanism.png" width="100%"><br><b><code>navy</code></b></td>
 </tr>
 <tr>
-<td width="50%" align="center"><img src="docs/images/theme-slate.png" width="100%"><br><b><code>slate</code></b></td>
-<td width="50%" align="center"><img src="docs/images/theme-terracotta.png" width="100%"><br><b><code>terracotta</code></b></td>
+<td width="50%" align="center"><img src="docs/images/theme-slate.png" width="100%"><br><img src="docs/images/theme-slate-mechanism.png" width="100%"><br><b><code>slate</code></b></td>
+<td width="50%" align="center"><img src="docs/images/theme-terracotta.png" width="100%"><br><img src="docs/images/theme-terracotta-mechanism.png" width="100%"><br><b><code>terracotta</code></b></td>
 </tr>
 <tr>
-<td width="50%" align="center"><img src="docs/images/theme-okabe-ito.png" width="100%"><br><b><code>okabe-ito</code></b></td>
-<td width="50%" align="center"><img src="docs/images/theme-mono.png" width="100%"><br><b><code>mono</code></b></td>
+<td width="50%" align="center"><img src="docs/images/theme-okabe-ito.png" width="100%"><br><img src="docs/images/theme-okabe-ito-mechanism.png" width="100%"><br><b><code>okabe-ito</code></b></td>
+<td width="50%" align="center"><img src="docs/images/theme-mono.png" width="100%"><br><img src="docs/images/theme-mono-mechanism.png" width="100%"><br><b><code>mono</code></b></td>
 </tr>
 </table>
 

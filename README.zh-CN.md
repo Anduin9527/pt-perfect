@@ -39,20 +39,20 @@
 
 ## 主题
 
-主题改变颜色、字体和渲染方式（填充、阴影、面板标题的样式），不改变版面。色调名（`blue`、`orange` 等）是语义槽位，每个预设都会填满，因此同一份源码无需修改即可切换主题。下图为上文的 ViT 模块图在各预设下的效果。
+主题改变颜色、字体和渲染方式（填充、阴影、面板标题的样式），不改变版面。色调名（`blue`、`orange` 等）是语义槽位，每个预设都会填满，因此同一份源码无需修改即可切换主题。下图为上文两张示例图在各预设下的效果。
 
 <table>
 <tr>
-<td width="50%" align="center"><img src="docs/images/theme-pastel.png" width="100%"><br><b><code>pastel</code></b>（默认）</td>
-<td width="50%" align="center"><img src="docs/images/theme-navy.png" width="100%"><br><b><code>navy</code></b></td>
+<td width="50%" align="center"><img src="docs/images/theme-pastel.png" width="100%"><br><img src="docs/images/theme-pastel-mechanism.png" width="100%"><br><b><code>pastel</code></b>（默认）</td>
+<td width="50%" align="center"><img src="docs/images/theme-navy.png" width="100%"><br><img src="docs/images/theme-navy-mechanism.png" width="100%"><br><b><code>navy</code></b></td>
 </tr>
 <tr>
-<td width="50%" align="center"><img src="docs/images/theme-slate.png" width="100%"><br><b><code>slate</code></b></td>
-<td width="50%" align="center"><img src="docs/images/theme-terracotta.png" width="100%"><br><b><code>terracotta</code></b></td>
+<td width="50%" align="center"><img src="docs/images/theme-slate.png" width="100%"><br><img src="docs/images/theme-slate-mechanism.png" width="100%"><br><b><code>slate</code></b></td>
+<td width="50%" align="center"><img src="docs/images/theme-terracotta.png" width="100%"><br><img src="docs/images/theme-terracotta-mechanism.png" width="100%"><br><b><code>terracotta</code></b></td>
 </tr>
 <tr>
-<td width="50%" align="center"><img src="docs/images/theme-okabe-ito.png" width="100%"><br><b><code>okabe-ito</code></b></td>
-<td width="50%" align="center"><img src="docs/images/theme-mono.png" width="100%"><br><b><code>mono</code></b></td>
+<td width="50%" align="center"><img src="docs/images/theme-okabe-ito.png" width="100%"><br><img src="docs/images/theme-okabe-ito-mechanism.png" width="100%"><br><b><code>okabe-ito</code></b></td>
+<td width="50%" align="center"><img src="docs/images/theme-mono.png" width="100%"><br><img src="docs/images/theme-mono-mechanism.png" width="100%"><br><b><code>mono</code></b></td>
 </tr>
 </table>
 
