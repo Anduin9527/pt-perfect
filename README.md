@@ -81,7 +81,11 @@ The task: recreate Fig. 2 of *3DSMT: A Hybrid Spiking Mamba-Transformer for Poin
 
 ## Install
 
-Copy the skill folder to where your agent looks for skills.
+```sh
+npx skills add Anduin9527/pt-perfect
+```
+
+This installs the skill for the agents it finds (Claude Code, Codex, Cursor and others). To install by hand, copy the skill folder to where your agent looks for skills:
 
 ```sh
 git clone https://github.com/Anduin9527/pt-perfect

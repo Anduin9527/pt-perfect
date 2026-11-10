@@ -81,7 +81,11 @@ theme: 'navy',   // 或 ['navy', t => { ... }] 再做调整；也可用 `npm run
 
 ## 安装
 
-把技能目录复制到智能体查找技能的位置。
+```sh
+npx skills add Anduin9527/pt-perfect
+```
+
+该命令会为检测到的智能体（Claude Code、Codex、Cursor 等）安装技能。也可以手动把技能目录复制到智能体查找技能的位置：
 
 ```sh
 git clone https://github.com/Anduin9527/pt-perfect
