@@ -21,6 +21,12 @@ export type Theme = {
   arrow: { length: number; width: number };
   pad: { x: number; y: number };   // node padding around content ink
   clearance: number;               // audit: wire-to-label / label-to-label distance
+  /** Rendering treatment, independent of the palette. */
+  look: {
+    node: 'tint' | 'solid' | 'gradient' | 'outline'; // pale fill | saturated fill with paper-coloured text | top-lit gradient | no fill
+    shadow: number;                                   // hard offset shadow behind nodes, in pt; 0 = none
+    panel: 'tint' | 'plain' | 'tab';                  // pale fill | frame only | frame with the title on a filled tab
+  };
 };
 
 const mac = '/System/Library/Fonts/Supplemental/';
@@ -55,6 +61,7 @@ export const defaultTheme: Theme = {
   arrow: { length: 3.8, width: 3 },
   pad: { x: 5, y: 3.2 },
   clearance: 1,
+  look: { node: 'tint', shadow: 0, panel: 'tint' },
 };
 
 export const MM = 72 / 25.4; // pt per mm

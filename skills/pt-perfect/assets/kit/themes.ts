@@ -31,7 +31,7 @@ const palette = (t: Theme, ink: string, c: { grey: string; blue: string; green: 
 export const themes: Record<string, (t: Theme) => void> = {
   /** Default: pastel fills with low-saturation hues, Times, rounded corners. */
   pastel: () => {},
-  /** Navy-led NPG-like hues, sans-serif at 5-7 pt, one dark ink, thin lines. */
+  /** Navy-led NPG-like hues as solid fills with white text, sans-serif at 5-7 pt, thin lines, unfilled panels. */
   navy: t => {
     sans(t);
     palette(t, '#1A1A1A', { grey: '#7E8791', blue: '#3C5488', green: '#00A087', orange: '#E18727', purple: '#7E6148', red: '#DC4B37' }, { fill: 0.86, text: 0.25 });
@@ -40,23 +40,26 @@ export const themes: Record<string, (t: Theme) => void> = {
     t.tones.blue.fill = '#E1E9F4'; t.tones.grey.fill = blend('#7E8791', '#FFFFFF', 0.9);
     t.size = { title: 7, label: 6.5, note: 6 }; t.minPt = 5;
     t.stroke = { node: 0.5, wire: 0.5, hair: 0.3 }; t.radius = 1.2; t.wireRadius = 1.4; t.arrow = { length: 3.2, width: 2.5 };
+    t.look = { node: 'solid', shadow: 0, panel: 'plain' };
   },
-  /** Slate neutrals with one blue accent, near-square corners. */
+  /** Slate neutrals with one blue accent, square corners, top-lit gradient fills, panel titles on filled tabs. */
   slate: t => {
     // Secondary tones are desaturated (slate green, taupe, slate violet) so blue stays the only accent
     // while every tone remains distinguishable from grey and from each other.
     palette(t, '#1F2933', { grey: '#7B8794', blue: '#1F5FA8', green: '#5C7A6E', orange: '#8A7560', purple: '#6A6585', red: '#B03A2E' }, { fill: 0.82 });
     t.tones.grey = { ...t.tones.grey, fill: blend('#7B8794', '#FFFFFF', 0.9) };
     t.tones.blue = ramp('#1F5FA8', { fill: 0.84 });
-    t.radius = 0.6; t.wireRadius = 1; t.stroke = { node: 0.6, wire: 0.6, hair: 0.35 };
+    t.radius = 0; t.wireRadius = 0; t.stroke = { node: 0.6, wire: 0.6, hair: 0.5 };
+    t.look = { node: 'gradient', shadow: 0, panel: 'tab' };
   },
-  /** Teal and terracotta accents on pale warm fills. */
+  /** Teal and terracotta accents on pale warm fills, heavy outlines, hard offset shadows. */
   terracotta: t => {
     t.paper = '#FFFFFF';
     palette(t, '#33302C', { grey: '#9A948B', blue: '#3F7C85', green: '#6B8F71', orange: '#C2693D', purple: '#8A6F92', red: '#B4514A' }, { fill: 0.86 });
     // Warm only the context tone; warming the accents turns the teal fill muddy.
     t.tones.grey.fill = blend(t.tones.grey.fill, '#FFF4E6', 0.5);
-    t.radius = 3;
+    t.radius = 3; t.stroke = { node: 0.9, wire: 0.8, hair: 0.5 };
+    t.look = { node: 'tint', shadow: 1.3, panel: 'tint' };
   },
   /** Okabe-Ito hues: distinguishable under the common colour-vision deficiencies. */
   'okabe-ito': t => {

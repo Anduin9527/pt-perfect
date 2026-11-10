@@ -31,7 +31,7 @@ description: Build publication-quality paper figures (method/framework diagrams,
 - **按视觉中心对齐，按墨迹留白。** 文字与公式共用一条基线，垂直居中以大写字高为准；模块尺寸与碰撞检查使用含上下标的真实墨迹范围。这是公式不出框、标签不错位的原因。
 - **连线从端口出发并声明起止对象。** `wire(id, [port(a,'right'), port(b,'left')], { from, to })`。审计据此核对端点落在边框上、未穿过其他对象。
 - **真实素材原样嵌入。** 图片按字节嵌入并可校验 sha256；派生图像在来源记录中写明公式、参数、显示变换。概念示意不得冒充实验结果。
-- **主题按用户偏好选择。** 先询问用户偏好的配色与字体（衬线或无衬线），据此选用 `navy`、`slate` 等预设；未说明时使用默认的 `pastel`。颜色一律取自色调或 `s.theme`，以便整体切换，见 [references/toolkit.md](references/toolkit.md) 的“主题”一节。
+- **主题按用户偏好选择。** 先询问用户偏好的配色、字体（衬线或无衬线）和渲染方式（浅色填充、实心、渐变、阴影），据此选用 `navy`、`slate` 等预设；未说明时使用默认的 `pastel`。颜色一律取自色调或 `s.theme`，以便整体切换，见 [references/toolkit.md](references/toolkit.md) 的“主题”一节。
 - **公式保留 TeX 源。** 行内写 `'Anchor $a = f(y)$'`，由 MathJax 转为矢量路径；符号需与正文逐一核对。
 
 ## 素材与来源

@@ -39,7 +39,7 @@ Both are 174 mm wide, pass the audit with 0 errors and 0 warnings, and are built
 
 ## Themes
 
-A theme changes colours, type and line treatment, not the layout. Tone names (`blue`, `orange`, ...) are semantic slots that every preset fills, so the same source switches theme without edits. Below is the ViT module figure from the gallery in each preset.
+A theme changes colours, type and rendering (fills, shadows, panel titles), not the layout. Tone names (`blue`, `orange`, ...) are semantic slots that every preset fills, so the same source switches theme without edits. Below is the ViT module figure from the gallery in each preset.
 
 <table>
 <tr>

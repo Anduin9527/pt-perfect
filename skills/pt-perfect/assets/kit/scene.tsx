@@ -88,6 +88,18 @@ export class Scene {
     if (!t) throw new Error(`Unknown tone "${name}"`);
     return t;
   }
+  /** Fill and text colour of a node in the theme's look; an explicit fill is kept as given. */
+  private paint(name: string | undefined, fill?: string): { fill: string; text: string } {
+    const T = this.theme, tone = this.tone(name), look = T.look.node;
+    if (fill) return { fill, text: T.ink };
+    if (look === 'outline') return { fill: T.paper, text: T.ink };
+    if (!name || name === 'neutral' || look === 'tint') return { fill: tone.fill, text: T.ink };
+    if (look === 'solid') return { fill: tone.stroke, text: T.paper };
+    const id = `g${tone.fill.slice(1)}`;
+    this.defs.set(id, <linearGradient key={id} id={id} x1="0" y1="0" x2="0" y2="1"><stop offset="0" stopColor={mix(tone.fill, T.paper, 0.75)} /><stop offset="1" stopColor={mix(tone.fill, tone.stroke, 0.22)} /></linearGradient>);
+    return { fill: `url(#${id})`, text: T.ink };
+  }
+  private defs = new Map<string, ReactNode>();
   private push(layer: Layer, el: ReactNode) { this.layers[layer].push(<g key={this.n++}>{el}</g>); }
   private register(item: Item) {
     if (this.items.some(i => i.id === item.id)) throw new Error(`Duplicate id "${item.id}"`);
@@ -179,10 +191,12 @@ export class Scene {
     const x = spec.x ?? (spec.cx ?? 0) - w / 2, y = spec.y ?? (spec.cy ?? 0) - h / 2;
     const box = { x, y, w, h };
     this.register({ id, kind: 'node', box, group: spec.group });
-    this.push('body', <rect data-id={id} x={r(x)} y={r(y)} width={r(w)} height={r(h)} rx={spec.radius ?? T.radius} fill={spec.fill ?? tone.fill} stroke={tone.stroke} strokeWidth={T.stroke.node} strokeDasharray={spec.dash ? '2.4 1.8' : undefined} />);
+    const rx = spec.radius ?? T.radius, sh = T.look.shadow, paint = this.paint(spec.tone, spec.fill);
+    if (sh > 0) this.push('back', <rect x={r(x + sh)} y={r(y + sh)} width={r(w)} height={r(h)} rx={rx} fill={tone.stroke} />);
+    this.push('body', <rect data-id={id} x={r(x)} y={r(y)} width={r(w)} height={r(h)} rx={rx} fill={paint.fill} stroke={tone.stroke} strokeWidth={T.stroke.node} strokeDasharray={spec.dash ? '2.4 1.8' : undefined} />);
     if (lines.length) {
       const first = y + h / 2 - optical / 2 + lines[0].cap;
-      lines.forEach((l, i) => this.label(`${id}.${i}`, l, { x: x + w / 2, y: first + base[i], color: spec.color ?? T.ink, inside: id, pivot: spec.vertical ? [x + w / 2, y + h / 2] : undefined }));
+      lines.forEach((l, i) => this.label(`${id}.${i}`, l, { x: x + w / 2, y: first + base[i], color: spec.color ?? paint.text, inside: id, pivot: spec.vertical ? [x + w / 2, y + h / 2] : undefined }));
     }
     return box;
   }
@@ -262,11 +276,17 @@ export class Scene {
    */
   panel(id: string, box: Box, o: { title?: Text; tone?: string; dash?: boolean; fill?: string | false; at?: 'tl' | 'tr' | 'tc' | 'below'; size?: number; color?: string; pad?: number } = {}): Box {
     const tone = this.tone(o.tone ?? 'grey'), T = this.theme, pad = o.pad ?? 4.5, at = o.at ?? 'tl';
-    this.region(id, box, { tone: o.tone ?? 'grey', dash: o.dash ?? false, fill: o.fill ?? mix(tone.fill, T.paper, 0.5) });
+    const look = T.look.panel, tab = look === 'tab' && at === 'tl' && !!o.title;
+    this.region(id, box, { tone: o.tone ?? 'grey', dash: o.dash ?? false, fill: o.fill ?? (look === 'tint' ? mix(tone.fill, T.paper, 0.5) : false) });
     if (o.title) {
       const l = this.line(o.title, { size: o.size ?? T.size.label, bold: true });
+      if (tab) {
+        // Filled tab in the corner, sized to the title so it takes no room from the panel's content.
+        const w = l.w + 2 * pad, h = l.cap + 1.6 * pad, R = T.radius + 1, c = Math.min(R, h / 2);
+        this.push('back', <path d={`M${r(box.x)} ${r(box.y + h)}V${r(box.y + R)}a${R} ${R} 0 0 1 ${R} ${-R}H${r(box.x + w)}V${r(box.y + h - c)}a${c} ${c} 0 0 1 ${-c} ${c}Z`} fill={tone.stroke} />);
+      }
       if (at === 'below') this.label(`${id}.title`, l, { x: cx(box), y: bottom(box) + 4, ax: 'c', ay: 'top', color: o.color ?? T.ink });
-      else this.label(`${id}.title`, l, { x: at === 'tl' ? box.x + pad : at === 'tr' ? right(box) - pad : cx(box), y: box.y + pad, ax: at === 'tl' ? 'l' : at === 'tr' ? 'r' : 'c', ay: 'top', color: o.color ?? tone.text });
+      else this.label(`${id}.title`, l, { x: at === 'tl' ? box.x + pad : at === 'tr' ? right(box) - pad : cx(box), y: box.y + pad * (tab ? 0.8 : 1), ax: at === 'tl' ? 'l' : at === 'tr' ? 'r' : 'c', ay: 'top', color: o.color ?? (tab ? T.paper : tone.text) });
     }
     return box;
   }
@@ -306,7 +326,7 @@ export class Scene {
       const sw = column ? colW : symW(e), sx = x + sw / 2, eid = `${id}.${i}`;
       if (e.op) boxes.push(this.op(eid, e.op, { cx: sx, cy: y, r: R, tone: e.tone }));
       else if (e.icon) boxes.push(this.icon(eid, e.icon, { cx: sx, cy: y, size: 7, tone: e.tone }));
-      else if (e.swatch) { const t = this.tone(e.swatch); boxes.push(this.raw(eid, <rect x={r(sx - 4.5)} y={r(y - 3)} width={9} height={6} rx={1.2} fill={e.fill ?? t.fill} stroke={t.stroke} strokeWidth={T.stroke.node} />, { x: sx - 4.5, y: y - 3, w: 9, h: 6 }, { layer: 'label' })); }
+      else if (e.swatch) { const t = this.tone(e.swatch); boxes.push(this.raw(eid, <rect x={r(sx - 4.5)} y={r(y - 3)} width={9} height={6} rx={1.2} fill={this.paint(e.swatch, e.fill).fill} stroke={t.stroke} strokeWidth={T.stroke.node} />, { x: sx - 4.5, y: y - 3, w: 9, h: 6 }, { layer: 'label' })); }
       else if (e.wire) { const c = this.tone(e.wire.tone).line, L = T.arrow.length, W = T.arrow.width / 2, xe = sx + 7; boxes.push(this.raw(eid, <g><path d={`M${r(sx - 7)} ${r(y)}H${r(xe - L * 0.8)}`} stroke={c} strokeWidth={T.stroke.wire} strokeDasharray={e.wire.dash ? '2.4 1.8' : undefined} fill="none" /><path d={`M${r(xe)} ${r(y)}L${r(xe - L)} ${r(y - W)}L${r(xe - L * 0.72)} ${r(y)}L${r(xe - L)} ${r(y + W)}Z`} fill={c} /></g>, { x: sx - 7, y: y - W, w: 14, h: 2 * W }, { layer: 'label' })); }
       boxes.push(this.label(`${eid}.text`, lines[i], { x: x + sw + 3, y, ax: 'l', ay: 'mid', color: T.muted }));
       if (column) y += o.rowGap ?? 11; else x += widths[i] + gap;
@@ -393,6 +413,7 @@ export class Scene {
     const W = r(this.width), H = r(this.height);
     return <svg xmlns="http://www.w3.org/2000/svg" width={`${W}pt`} height={`${H}pt`} viewBox={`0 0 ${W} ${H}`} fontFamily={this.theme.fontFamily} role="img">
       <title>{meta.title}</title><desc>{meta.desc}</desc>
+      {this.defs.size > 0 && <defs>{[...this.defs.values()]}</defs>}
       <rect width={W} height={H} fill={this.theme.paper} />
       <g id="back">{this.layers.back}</g><g id="wires">{this.layers.wire}</g><g id="body">{this.layers.body}</g><g id="labels">{this.layers.label}</g>
     </svg>;
