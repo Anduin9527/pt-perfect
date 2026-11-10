@@ -1,0 +1,26 @@
+{
+  "name": "paper-figure",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "tsx kit/cli.tsx build",
+    "watch": "tsx watch kit/cli.tsx build",
+    "export": "tsx kit/cli.tsx export",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "@types/react": "^19.2.0",
+    "@types/react-dom": "^19.2.0",
+    "fontkit": "^2.0.4",
+    "mathjax-full": "^3.2.2",
+    "pdf-lib": "^1.17.1",
+    "playwright-core": "^1.56.0",
+    "tsx": "^4.20.0",
+    "typescript": "^5.9.0"
+  }
+}

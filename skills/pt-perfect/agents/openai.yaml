@@ -1,0 +1,4 @@
+interface:
+  display_name: "pt-perfect"
+  short_description: "用测量驱动的 React + SVG 工具包绘制论文方法图，带几何审计与尺寸精确的矢量导出"
+  default_prompt: "使用 $pt-perfect 依据正文与真实素材制作论文方法图，交付源码、审计结果和 PDF/SVG/PNG。"
