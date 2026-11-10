@@ -85,15 +85,7 @@ theme: 'navy',   // 或 ['navy', t => { ... }] 再做调整；也可用 `npm run
 npx skills add Anduin9527/pt-perfect
 ```
 
-该命令会为检测到的智能体（Claude Code、Codex、Cursor 等）安装技能。也可以手动把技能目录复制到智能体查找技能的位置：
-
-```sh
-git clone https://github.com/Anduin9527/pt-perfect
-# Claude Code（用户级；项目级放在仓库内的 .claude/skills/）
-cp -R pt-perfect/skills/pt-perfect ~/.claude/skills/
-# Codex
-cp -R pt-perfect/skills/pt-perfect ~/.codex/skills/
-```
+该命令会为检测到的智能体（Claude Code、Codex、Cursor 等）安装技能。
 
 然后直接提出需求，例如：“使用 pt-perfect 按 174 mm 宽度绘制这篇论文的方法图。”
 
